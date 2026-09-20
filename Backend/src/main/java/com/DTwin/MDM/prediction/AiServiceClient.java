@@ -21,15 +21,12 @@ public class AiServiceClient {
         this.restTemplate = restTemplate;
     }
 
-    public AiPredictionResponse predict(
-            MultipartFile image) {
+    public AiPredictionResponse predict(MultipartFile image) {
 
         try {
 
-            // Convert uploaded image into resource
             ByteArrayResource resource =
-                    new ByteArrayResource(
-                            image.getBytes()) {
+                    new ByteArrayResource(image.getBytes()) {
 
                         @Override
                         public String getFilename() {
@@ -37,25 +34,21 @@ public class AiServiceClient {
                         }
                     };
 
-            // Multipart request
             MultiValueMap<String, Object> body =
                     new LinkedMultiValueMap<>();
 
             body.add("file", resource);
 
-            HttpHeaders headers =
-                    new HttpHeaders();
+            HttpHeaders headers = new HttpHeaders();
 
             headers.setContentType(
-                    MediaType.MULTIPART_FORM_DATA);
+                    MediaType.MULTIPART_FORM_DATA
+            );
 
-            HttpEntity<MultiValueMap<String, Object>>
-                    request =
+            HttpEntity<MultiValueMap<String, Object>> request =
                     new HttpEntity<>(body, headers);
 
-            // Call FastAPI
-            ResponseEntity<AiPredictionResponse>
-                    response =
+            ResponseEntity<AiPredictionResponse> response =
                     restTemplate.exchange(
                             aiServiceUrl + "/predict",
                             HttpMethod.POST,
@@ -69,7 +62,9 @@ public class AiServiceClient {
 
             throw new RuntimeException(
                     "Failed to communicate with AI service: "
-                            + e.getMessage());
+                            + e.getMessage(),
+                    e
+            );
         }
     }
 }
