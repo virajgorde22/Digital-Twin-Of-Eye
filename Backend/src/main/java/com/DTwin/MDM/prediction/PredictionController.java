@@ -11,36 +11,57 @@ public class PredictionController {
 
     private final PredictionService predictionService;
 
+
     public PredictionController(
             PredictionService predictionService) {
 
-        this.predictionService = predictionService;
+        this.predictionService =
+                predictionService;
     }
 
+
+    // =========================================================
     // ANALYZE IMAGE
+    // =========================================================
+
     @PostMapping("/analyze/{scanId}")
-    public ResponseEntity<Prediction> analyzeScan(
+    public ResponseEntity<PredictionResultResponse>
+    analyzeScan(
 
             @PathVariable Long scanId,
 
             @RequestParam("image")
             MultipartFile image) {
 
-        return ResponseEntity.ok(
+
+        PredictionResultResponse result =
                 predictionService.analyzeScan(
                         scanId,
                         image
-                )
-        );
+                );
+
+
+        return ResponseEntity.ok(result);
     }
 
+
+    // =========================================================
     // GET PREDICTION
+    // =========================================================
+
     @GetMapping("/scan/{scanId}")
-    public ResponseEntity<Prediction> getPrediction(
+    public ResponseEntity<PredictionResultResponse>
+    getPrediction(
+
             @PathVariable Long scanId) {
 
-        return ResponseEntity.ok(
-                predictionService.getPrediction(scanId)
-        );
+
+        PredictionResultResponse result =
+                predictionService.getPrediction(
+                        scanId
+                );
+
+
+        return ResponseEntity.ok(result);
     }
 }

@@ -2,17 +2,33 @@ package com.DTwin.MDM.prediction;
 
 import lombok.*;
 
+import java.util.Map;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class AiPredictionResponse {
 
-    private String disease;
+    private String filename;
 
-    private String severity;
+    private Map<String, Double> rfmid;
 
-    private Double confidence;
+    private Map<String, Double> odir;
 
-    private String gradCamUrl;
+    private TopPrediction rfmidTopPrediction;
+
+    private TopPrediction odirTopPrediction;
+
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class TopPrediction {
+
+        private String disease;
+
+        private Double confidence;
+    }
 }
