@@ -1,0 +1,7 @@
+ml_service/.venv/
+.vscode/
+uploads/retinal-images/
+Backend/target/
+
+__pycache__/
+*.py[cod]
